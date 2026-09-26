@@ -145,3 +145,13 @@ filterStatus.addEventListener("change", renderTable);
 
 // Initial Load
 renderTable();
+function updateDashboard() {
+  // Total leads is just the total length of the array
+  statTotal.textContent = customers.length;
+
+  // Filter returns a sub-array matching the condition; .length gives the count
+  statNew.textContent = customers.filter(c => c.status === "New").length;
+  statContacted.textContent = customers.filter(c => c.status === "Contacted").length;
+  statInterested.textContent = customers.filter(c => c.status === "Interested").length;
+  statClosed.textContent = customers.filter(c => c.status === "Closed").length;
+}
