@@ -47,27 +47,29 @@ function renderTable() {
 
   if (filteredCustomers.length === 0) {
     tableBody.innerHTML = <tr><td colspan="6" style="text-align: center; color: #64748b;">No matching records found</td></tr>;
-    return;
+  } else {
+    filteredCustomers.forEach(customer => {
+      // Find absolute index in master array
+      const originalIndex = customers.indexOf(customer);
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><strong>${customer.name}</strong></td>
+        <td>${customer.email}</td>
+        <td>${customer.phone}</td>
+        <td>${customer.company || "-"}</td>
+        <td>${customer.status}</td>
+        <td>
+          <button onclick="editCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; margin-right: 4px;">Edit</button>
+          <button onclick="deleteCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; background-color: #ef4444;">Delete</button>
+        </td>
+      `;
+      tableBody.appendChild(row);
+    });
   }
 
-  filteredCustomers.forEach(customer => {
-    // Find absolute index in master array
-    const originalIndex = customers.indexOf(customer);
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td><strong>${customer.name}</strong></td>
-      <td>${customer.email}</td>
-      <td>${customer.phone}</td>
-      <td>${customer.company || "-"}</td>
-      <td>${customer.status}</td>
-      <td>
-        <button onclick="editCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; margin-right: 4px;">Edit</button>
-        <button onclick="deleteCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; background-color: #ef4444;">Delete</button>
-      </td>
-    `;
-    tableBody.appendChild(row);
-  });
+  // Keep dashboard metrics in sync with the current master data
+  updateDashboard();
 }
 
 // --- 5. CREATE & UPDATE (Form Submit Event) ---
@@ -144,6 +146,7 @@ searchInput.addEventListener("input", renderTable);
 filterStatus.addEventListener("change", renderTable);
 
 // Initial Load
+
 renderTable();
 function updateDashboard() {
   // Total leads is just the total length of the array
