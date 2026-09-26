@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer & Lead Manager</title>
+</head>
+<body>
 
+  <header>
+    <h1>Customer & Lead Manager</h1>
+  </header>
+
+  <main>
+    <!-- Customer Input Form -->
+    <section>
+      <h2>Add Customer Details</h2>
+      <form id="customer-form">
+        
+        <div>
+          <label for="name">Customer Name:</label>
+          <input type="text" id="name" name="name" required placeholder="Enter customer name">
+        </div>
+
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required placeholder="name@example.com">
+        </div>
+
+        <div>
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" required placeholder="e.g. +91 9876543210">
+        </div>
+
+        <div>
+          <label for="company">Company Name:</label>
+          <input type="text" id="company" name="company" placeholder="Enter company name">
+        </div>
+
+        <div>
+          <label for="status">Status:</label>
+          <select id="status" name="status">
+            <option value="New">New</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Interested">Interested</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="notes">Notes:</label>
+          <textarea id="notes" name="notes" rows="4" cols="30" placeholder="Add any relevant notes or context..."></textarea>
+        </div>
+
+        <button type="submit">Add Customer</button>
+      </form>
+    </section>
+
+    <hr>
+
+    <!-- Empty Table for Records -->
+    <section>
+      <h2>Customer Records</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Company</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="customer-table-body">
+          <!-- Customer rows will be inserted here on Day 2 via JavaScript -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+</body>
+</html>
