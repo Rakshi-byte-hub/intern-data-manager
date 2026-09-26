@@ -18,6 +18,8 @@
     <section>
       <h2>Add Customer Details</h2>
       <form id="customer-form">
+        <!-- Hidden input to track edit index -->
+        <input type="hidden" id="edit-index" value="-1">
         
         <div>
           <label for="name">Customer Name:</label>
@@ -59,11 +61,31 @@
     </section>
 
     <hr>
+     <!-- Search & Filter Controls -->
+    <section>
+      <h2>Search & Filter</h2>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 200px;">
+          <label for="search-input">Search Customer:</label>
+          <input type="text" id="search-input" placeholder="Search by name...">
+        </div>
+        <div style="width: 200px;">
+          <label for="filter-status">Filter by Status:</label>
+          <select id="filter-status">
+            <option value="All">All</option>
+            <option value="New">New</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Interested">Interested</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+      </div>
+    </section>
 
-    <!-- Empty Table for Records -->
+    <!-- Records Table -->
     <section>
       <h2>Customer Records</h2>
-      <table border="1">
+      <table>
         <thead>
           <tr>
             <th>Name</th>
@@ -75,11 +97,13 @@
           </tr>
         </thead>
         <tbody id="customer-table-body">
-          <!-- Customer rows will be inserted here on Day 2 via JavaScript -->
+          <!-- Rendered dynamically -->
         </tbody>
       </table>
     </section>
   </main>
 
+  <script src="script.js"></script>
 </body>
 </html>
+    
