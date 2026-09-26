@@ -3,6 +3,12 @@
 let customers = JSON.parse(localStorage.getItem("customers")) || [];
 
 // --- 2. DOM REFERENCES ---
+const statTotal = document.getElementById("stat-total");
+const statNew = document.getElementById("stat-new");
+const statContacted = document.getElementById("stat-contacted");
+const statInterested = document.getElementById("stat-interested");
+const statClosed = document.getElementById("stat-closed");
+
 const customerForm = document.getElementById("customer-form");
 const editIndexInput = document.getElementById("edit-index");
 const formHeading = document.getElementById("form-heading");
