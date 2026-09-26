@@ -105,6 +105,41 @@ th {
 }
 
 /* 7. Divider */
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  background-color: #ffffff;
+  padding: 16px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+}
+
+.stat-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.stat-title {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e293b;
+}
 hr {
   border: none;
   border-top: 1px solid #e2e8f0;
