@@ -1,5 +1,4 @@
-// --- 1. STATE INITIALIZATION (Part 4: localStorage) ---
-// Retrieve existing customers or initialize empty array
+// --- 1. STATE INITIALIZATION ---
 let customers = JSON.parse(localStorage.getItem("customers")) || [];
 
 // --- 2. DOM REFERENCES ---
@@ -12,8 +11,20 @@ const statClosed = document.getElementById("stat-closed");
 const customerForm = document.getElementById("customer-form");
 const editIndexInput = document.getElementById("edit-index");
 const formHeading = document.getElementById("form-heading");
-const submitBtn = document.getElementById("submit-btn");
-const cancelBtn = document.getElementById("cancel-btn");
+const submitBtn = document.querySelector("#customer-form button[type='submit']");
+let cancelBtn = document.getElementById("cancel-btn");
+
+// Create cancel button dynamically if not in HTML
+if (!cancelBtn) {
+  cancelBtn = document.createElement("button");
+  cancelBtn.type = "button";
+  cancelBtn.id = "cancel-btn";
+  cancelBtn.textContent = "Cancel";
+  cancelBtn.style.display = "none";
+  cancelBtn.style.backgroundColor = "#64748b";
+  cancelBtn.style.marginLeft = "8px";
+  customerForm.appendChild(cancelBtn);
+}
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
@@ -31,12 +42,21 @@ function saveToStorage() {
   localStorage.setItem("customers", JSON.stringify(customers));
 }
 
-// --- 4. READ (Render table with Search & Filter) ---
+// --- 4. DASHBOARD UPDATE ---
+function updateDashboard() {
+  if (!statTotal) return;
+  statTotal.textContent = customers.length;
+  statNew.textContent = customers.filter(c => c.status === "New").length;
+  statContacted.textContent = customers.filter(c => c.status === "Contacted").length;
+  statInterested.textContent = customers.filter(c => c.status === "Interested").length;
+  statClosed.textContent = customers.filter(c => c.status === "Closed").length;
+}
+
+// --- 5. RENDER TABLE WITH SEARCH & FILTER ---
 function renderTable() {
   const query = searchInput.value.toLowerCase().trim();
   const selectedStatus = filterStatus.value;
 
-  // Filter criteria: match name substring AND status category
   const filteredCustomers = customers.filter(customer => {
     const matchesName = customer.name.toLowerCase().includes(query);
     const matchesStatus = (selectedStatus === "All") || (customer.status === selectedStatus);
@@ -46,12 +66,10 @@ function renderTable() {
   tableBody.innerHTML = "";
 
   if (filteredCustomers.length === 0) {
-    tableBody.innerHTML = <tr><td colspan="6" style="text-align: center; color: #64748b;">No matching records found</td></tr>;
+    tableBody.innerHTML = <tr><td colspan="6" style="text-align: center; color: #64748b; padding: 12px;">No matching records found</td></tr>;
   } else {
     filteredCustomers.forEach(customer => {
-      // Find absolute index in master array
       const originalIndex = customers.indexOf(customer);
-
       const row = document.createElement("tr");
       row.innerHTML = `
         <td><strong>${customer.name}</strong></td>
@@ -60,19 +78,18 @@ function renderTable() {
         <td>${customer.company || "-"}</td>
         <td>${customer.status}</td>
         <td>
-          <button onclick="editCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; margin-right: 4px;">Edit</button>
-          <button onclick="deleteCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; background-color: #ef4444;">Delete</button>
+          <button type="button" onclick="editCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; margin-right: 4px;">Edit</button>
+          <button type="button" onclick="deleteCustomer(${originalIndex})" style="padding: 4px 8px; font-size: 12px; background-color: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">Delete</button>
         </td>
       `;
       tableBody.appendChild(row);
     });
   }
 
-  // Keep dashboard metrics in sync with the current master data
   updateDashboard();
 }
 
-// --- 5. CREATE & UPDATE (Form Submit Event) ---
+// --- 6. CREATE & UPDATE ---
 customerForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -88,10 +105,8 @@ customerForm.addEventListener("submit", function (e) {
   const currentIndex = parseInt(editIndexInput.value, 10);
 
   if (currentIndex === -1) {
-    // CREATE
     customers.push(customerData);
   } else {
-    // UPDATE
     customers[currentIndex] = customerData;
     resetForm();
   }
@@ -101,11 +116,11 @@ customerForm.addEventListener("submit", function (e) {
   customerForm.reset();
 });
 
-// --- 6. UPDATE PREPARATION (Edit Mode) ---
+// --- 7. EDIT PREPARATION ---
 window.editCustomer = function (index) {
   const customer = customers[index];
-
   editIndexInput.value = index;
+
   nameInput.value = customer.name;
   emailInput.value = customer.email;
   phoneInput.value = customer.phone;
@@ -116,6 +131,8 @@ window.editCustomer = function (index) {
   formHeading.textContent = "Edit Customer Details";
   submitBtn.textContent = "Update Customer";
   cancelBtn.style.display = "inline-block";
+
+  customerForm.scrollIntoView({ behavior: "smooth" });
 };
 
 cancelBtn.addEventListener("click", resetForm);
@@ -128,7 +145,7 @@ function resetForm() {
   cancelBtn.style.display = "none";
 }
 
-// --- 7. DELETE ---
+// --- 8. DELETE ---
 window.deleteCustomer = function (index) {
   if (confirm(Delete record for ${customers[index].name}?)) {
     customers.splice(index, 1);
@@ -141,20 +158,8 @@ window.deleteCustomer = function (index) {
   }
 };
 
-// --- 8. SEARCH & FILTER EVENTS ---
+// --- 9. EVENT LISTENERS & INITIAL LOAD ---
 searchInput.addEventListener("input", renderTable);
 filterStatus.addEventListener("change", renderTable);
 
-// Initial Load
-
 renderTable();
-function updateDashboard() {
-  // Total leads is just the total length of the array
-  statTotal.textContent = customers.length;
-
-  // Filter returns a sub-array matching the condition; .length gives the count
-  statNew.textContent = customers.filter(c => c.status === "New").length;
-  statContacted.textContent = customers.filter(c => c.status === "Contacted").length;
-  statInterested.textContent = customers.filter(c => c.status === "Interested").length;
-  statClosed.textContent = customers.filter(c => c.status === "Closed").length;
-}
