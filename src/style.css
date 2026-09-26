@@ -1,1 +1,112 @@
+/* 1. Global Reset & Typography */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+body {
+  background-color: #f4f6f8; /* Colors: soft neutral background */
+  color: #333333;           /* Font color: dark slate for readability */
+  padding: 24px;            /* Padding: breathing room around the whole page */
+  max-width: 800px;
+  margin: 0 auto;           /* Margin: centers the container horizontally */
+}
+
+/* 2. Header */
+header h1 {
+  font-size: 26px;          /* Font sizes */
+  margin-bottom: 20px;      /* Margin: space below the title */
+  color: #1e293b;
+}
+
+/* 3. Section Containers */
+section {
+  background-color: #ffffff;
+  padding: 20px;            /* Padding: internal space inside the card */
+  margin-bottom: 24px;      /* Margin: external space separating sections */
+  border-radius: 8px;
+  border: 1px solid #dcdcdc; /* Borders: clean outline */
+}
+
+section h2 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #475569;
+}
+
+/* 4. Form Styling */
+form div {
+  margin-bottom: 14px;      /* Space between input fields */
+}
+
+label {
+  display: block;           /* Puts label on its own line above input */
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+/* Unified styling for inputs, dropdowns, and text areas */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;              /* Stretches to fill container */
+  padding: 8px 10px;        /* Padding inside the input box */
+  font-size: 14px;
+  border: 1px solid #cbd5e1; /* Borders */
+  border-radius: 4px;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;    /* Visual cue when clicking into an input */
+}
+
+/* 5. Button Styling */
+button {
+  background-color: #2563eb; /* Primary blue */
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px 18px;        /* Padding: clickable area */
+  border: none;              /* Removes default browser border */
+  border-radius: 4px;
+  cursor: pointer;           /* Shows hand cursor on hover */
+}
+
+button:hover {
+  background-color: #1d4ed8; /* Darker blue when hovered */
+}
+
+/* 6. Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Merges double borders into a single clean border */
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 10px 12px;        /* Cell padding */
+  text-align: left;
+  border: 1px solid #e2e8f0; /* Cell border */
+  font-size: 14px;
+}
+
+th {
+  background-color: #f8fafc; /* Subtle grey header background */
+  font-weight: bold;
+  color: #334155;
+}
+
+/* 7. Divider */
+hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 24px 0;
+}
